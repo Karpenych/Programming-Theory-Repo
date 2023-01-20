@@ -4,21 +4,16 @@ using UnityEngine;
 
 public class Rifle : Gun
 {
-    public Rifle Instance { get; private set; }
     private const float shootTimer = 0.1f;
     private bool isCanShoot = true;
 
 
-    private void Awake()
-    {
-        Instance = this;
-    }
-
     private void Start()
     {
         Damage = 10;
-        ShootPower = 50f;
-
+        ShootPower = 50;
+        BulletAmount = 30;
+        ShootingInfo = "automatic shooting";
     }
 
     private void Update()
@@ -44,10 +39,4 @@ public class Rifle : Gun
         yield return new WaitForSeconds(shootTimer);
         isCanShoot = true;
     }
-
-    public override void ShowInfo()
-    {
-        throw new System.NotImplementedException();
-    }
-
 }

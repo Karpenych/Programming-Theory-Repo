@@ -4,18 +4,12 @@ using UnityEngine;
 
 public class Pistol : Gun
 {
-    public Pistol Instance { get; private set; }
-    
-
-    private void Awake()
-    {
-        Instance = this; 
-    }
-
     private void Start()
     {
         Damage = 5;
         ShootPower = 10f;
+        BulletAmount = 8;
+        ShootingInfo = "single shooting";
     }
 
     private void Update()
@@ -25,13 +19,4 @@ public class Pistol : Gun
             Shoot(transform.forward);
         }
     }
-
-    public override void ShowInfo()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    
-
-    
 }

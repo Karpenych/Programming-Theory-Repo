@@ -4,19 +4,12 @@ using UnityEngine;
 
 public class Shotgun : Gun
 {
-    public Shotgun Instance { get; private set; }
-
-
-    private void Awake()
-    {
-        Instance = this;
-    }
-
     private void Start()
     {
         Damage = 15;
         ShootPower = 100f;
-
+        BulletAmount = 30;
+        ShootingInfo = "single shooting (5 bullets)";
     }
 
     private void Update()
@@ -27,11 +20,6 @@ public class Shotgun : Gun
         }
     }
 
-    public override void ShowInfo()
-    {
-        throw new System.NotImplementedException();
-    }
-
     protected override void Shoot(Vector3 direction)
     {
         base.Shoot(new Vector3(-0.2f, 0f, 1f));
@@ -39,8 +27,5 @@ public class Shotgun : Gun
         base.Shoot(direction);
         base.Shoot(new Vector3(0.1f, 0f, 1f));
         base.Shoot(new Vector3(0.2f, 0f, 1f));
-
-
     }
-
 }
