@@ -15,6 +15,7 @@ public class Pistol : Gun
         IsDropped = false;
         PositionOnDesk = transform.position;
         RotationOnDesk= transform.rotation;
+
     }
 
     private void Update()
