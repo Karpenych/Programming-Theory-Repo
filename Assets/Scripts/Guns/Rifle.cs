@@ -13,6 +13,7 @@ public class Rifle : Gun
         Damage = 10;
         ShootPower = 100;
         BulletAmount = 30;
+        BulletsLeft = BulletAmount;
         ShootingInfo = "automatic shooting";
         IsDropped = false;
         PositionOnDesk = transform.position;
@@ -24,6 +25,11 @@ public class Rifle : Gun
         if (Input.GetMouseButton(0))
         {
             Shoot(transform.forward);
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Reload();
         }
     }
 

@@ -9,6 +9,7 @@ public class Shotgun : Gun
         Damage = 15;
         ShootPower = 100f;
         BulletAmount = 30;
+        BulletsLeft = BulletAmount;
         ShootingInfo = "single shooting\n\t\t(5 bullets)";
         IsDropped = false;
         PositionOnDesk = transform.position;
@@ -20,6 +21,11 @@ public class Shotgun : Gun
         if (Input.GetMouseButtonDown(0))
         {
             Shoot(transform.forward);
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Reload();
         }
     }
 

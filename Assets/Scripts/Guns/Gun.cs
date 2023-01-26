@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using TMPro.EditorUtilities;
 using UnityEngine;
 
 public abstract class Gun : MonoBehaviour
@@ -10,7 +7,8 @@ public abstract class Gun : MonoBehaviour
     [SerializeField] GameObject bulletSpawner;
     
     public float Damage { get; protected set; }
-    public float BulletAmount { get; protected set; }
+    protected float BulletAmount { get; set; }
+    protected float BulletsLeft { get; set; }
     public bool IsDropped { get; set; }
     protected float ShootPower { get; set; }
     protected string ShootingInfo { get; set; }
@@ -25,13 +23,19 @@ public abstract class Gun : MonoBehaviour
 
     protected virtual void Shoot(Vector3 direction)
     {
-        if (IsDropped) 
+        if (IsDropped && BulletsLeft > 0) 
         {
+            --BulletsLeft;
             GameObject tmp = Instantiate(bulletPrefab, bulletSpawner.transform.position, transform.rotation);
             tmp.GetComponent<Rigidbody>().velocity = direction.normalized * ShootPower;
             gameObject.GetComponent<AudioSource>().Play();
         }
-    }  
+    }
+
+    protected void Reload()
+    {
+        BulletsLeft = BulletAmount;
+    }
 
     public void ShowInfo()
     {
@@ -58,9 +62,11 @@ public abstract class Gun : MonoBehaviour
         if (IsDropped)
         {
             GUIStyle gs = new();
-            gs.fontSize = 50;
             gs.normal.textColor = new Color(10, 10, 10, 0.6f);
-            GUI.Label(new Rect(Camera.main.pixelWidth - 140, Camera.main.pixelHeight - 100, 30, 30), $"10/{BulletAmount}", gs); // CROSSHAIR
+            gs.fontSize = 25;
+            GUI.Label(new Rect(Camera.main.pixelWidth - 200, Camera.main.pixelHeight - 150, 30, 30), "Press R to reload", gs); // Clip
+            gs.fontSize = 50;
+            GUI.Label(new Rect(Camera.main.pixelWidth - 140, Camera.main.pixelHeight - 100, 30, 30), $"{BulletsLeft}/{BulletAmount}", gs); // Clip
         }
     }
 }
