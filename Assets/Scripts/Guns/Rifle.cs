@@ -5,15 +5,18 @@ using UnityEngine;
 public class Rifle : Gun
 {
     private const float shootTimer = 0.1f;
-    private bool isCanShoot = true;
+    private bool isCanShootNow = true;
 
 
     private void Start()
     {
         Damage = 10;
-        ShootPower = 50;
+        ShootPower = 100;
         BulletAmount = 30;
         ShootingInfo = "automatic shooting";
+        IsDropped = false;
+        PositionOnDesk = transform.position;
+        RotationOnDesk = transform.rotation;
     }
 
     private void Update()
@@ -26,10 +29,10 @@ public class Rifle : Gun
 
     protected override void Shoot(Vector3 direction)
     {
-        if (isCanShoot)
+        if (isCanShootNow)
         {
             base.Shoot(direction);
-            isCanShoot = false;
+            isCanShootNow = false;
             StartCoroutine(ShootTimer());
         }
     }
@@ -37,6 +40,6 @@ public class Rifle : Gun
     IEnumerator ShootTimer()
     {
         yield return new WaitForSeconds(shootTimer);
-        isCanShoot = true;
+        isCanShootNow = true;
     }
 }

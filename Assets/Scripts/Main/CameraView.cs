@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 public class CameraView : MonoBehaviour
 {
     [SerializeField] Camera _camera;
+    [SerializeField] Gun currentInfo;
+    [SerializeField] Gun currentGun;
+    [SerializeField] Transform gunTaker;
     float mouseSensitivity = 5f;
     float xRange = 50;
     float yRange = 30;
@@ -42,9 +45,69 @@ public class CameraView : MonoBehaviour
         currentAngles = transform.localEulerAngles;
         currentAngles.x = m_VerticalAngle;
         transform.localEulerAngles = currentAngles;
+
+        // TAKE GUN
+        if (Input.GetMouseButtonDown(1))
+        {
+            Ray ray = new(transform.position, transform.forward);
+
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                var gun = hit.collider.gameObject.GetComponent<Gun>();
+                if (gun)
+                {
+                    if (currentGun && currentGun != gun)
+                    {
+                        currentGun.PutOnDesk();
+                    }
+                    currentGun = gun;
+                    currentGun.gameObject.transform.SetParent(gunTaker);
+                    var takenGunPos = gunTaker.position;
+                    currentGun.gameObject.transform.SetPositionAndRotation(takenGunPos, gunTaker.rotation);
+                    currentGun.IsDropped = true;
+                }
+            }
+        }
     }
 
-    // USER INTERFACE
+    private void LateUpdate()
+    {
+        Ray ray = new(transform.position, transform.forward);
+
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            var info = hit.collider.gameObject.GetComponent<Gun>();
+
+            if (info && !info.IsDropped)
+            {
+                if (currentInfo && currentInfo != info)
+                {
+                    currentInfo.HideInfo();
+                }
+                currentInfo = info;
+                currentInfo.ShowInfo();
+            }
+            else
+            {
+                if (currentInfo)
+                {
+                    currentInfo.HideInfo();
+                    currentInfo = null;
+                }
+            }
+        }
+        else
+        {
+            if (currentInfo)
+            {
+                currentInfo.HideInfo();
+                currentInfo = null;
+            }
+        }
+    }
+
+
+    // CROSSHAIR
     private void OnGUI()
     {
         GUIStyle gs = new();

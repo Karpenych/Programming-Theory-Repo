@@ -17,4 +17,9 @@ public class BulletBehav : MonoBehaviour
         yield return new WaitForSeconds(bulletLiveTime);
         Destroy(gameObject);
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        gameObject.GetComponent<Rigidbody>().useGravity = true;
+    }
 }

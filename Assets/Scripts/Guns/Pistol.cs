@@ -7,9 +7,12 @@ public class Pistol : Gun
     private void Start()
     {
         Damage = 5;
-        ShootPower = 10f;
+        ShootPower = 100;
         BulletAmount = 8;
         ShootingInfo = "single shooting";
+        IsDropped = false;
+        PositionOnDesk = transform.position;
+        RotationOnDesk= transform.rotation;
     }
 
     private void Update()

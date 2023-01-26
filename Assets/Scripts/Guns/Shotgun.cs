@@ -9,7 +9,10 @@ public class Shotgun : Gun
         Damage = 15;
         ShootPower = 100f;
         BulletAmount = 30;
-        ShootingInfo = "single shooting (5 bullets)";
+        ShootingInfo = "single shooting\n\t\t(5 bullets)";
+        IsDropped = false;
+        PositionOnDesk = transform.position;
+        RotationOnDesk = transform.rotation;
     }
 
     private void Update()
@@ -22,10 +25,10 @@ public class Shotgun : Gun
 
     protected override void Shoot(Vector3 direction)
     {
-        base.Shoot(new Vector3(-0.2f, 0f, 1f));
-        base.Shoot(new Vector3(-0.1f, 0f, 1f));
+        base.Shoot(new Vector3(direction.x - 0.2f, direction.y, direction.z));
+        base.Shoot(new Vector3(direction.x - 0.1f, direction.y, direction.z));
         base.Shoot(direction);
-        base.Shoot(new Vector3(0.1f, 0f, 1f));
-        base.Shoot(new Vector3(0.2f, 0f, 1f));
+        base.Shoot(new Vector3(direction.x + 0.1f, direction.y, direction.z));
+        base.Shoot(new Vector3(direction.x + 0.2f, direction.y, direction.z));
     }
 }
